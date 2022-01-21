@@ -1,0 +1,107 @@
+.flex-outer, .flex-inner {
+  list-style-type: none;
+  padding: 0;
+}
+
+.flex-outer {
+  margin: 0 auto;
+}
+
+.flex-outer li, .flex-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.flex-inner {
+  padding: 0 8px;
+  justify-content: space-between;
+}
+
+.flex-outer>li:not(:last-child) {
+  margin-bottom: 0.75em;
+}
+
+.flex-outer li label, .flex-outer li p {
+  padding: 8px;
+  letter-spacing: .09em;
+}
+
+.flex-outer>li>label, .flex-outer li p {
+  flex: 1 0 120px;
+  max-width: 220px;
+}
+
+.flex-outer>li>label+*, .flex-inner {
+  flex: 1 0 220px;
+}
+
+.flex-outer li p {
+  margin: 0;
+}
+
+.flex-outer li input:not(:placeholder-shown):invalid {
+  background-color: pink;
+}
+
+.flex-outer li input:not([type='checkbox']), .flex-outer li textarea {
+  border: none;
+}
+
+.flex-outer li button {
+  margin-left: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.flex-inner li {
+  width: 100px;
+}
+
+/*
+ The section below is used when presenting the form information but with text only, without any form elements.
+*/
+
+.flex-outer-readonly, .flex-inner-readonly {
+  list-style-type: none;
+  padding: 0;
+}
+
+.flex-outer-readonly {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.flex-outer-readonly li, .flex-inner-readonly {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.flex-inner-readonly {
+  padding: 0 8px;
+  justify-content: space-between;
+}
+
+.flex-outer-readonly li label, .flex-outer-readonly li p {
+  padding: 8px;
+  letter-spacing: .09em;
+}
+
+.flex-outer-readonly>li>label, .flex-outer-readonly li p {
+  flex: 1 0 80px;
+  font-weight: bold;
+}
+
+.flex-outer-readonly>li>label+*, .flex-inner-readonly {
+  flex: 1 0 120px;
+}
+
+.flex-outer-readonly li p {
+  margin: 0;
+}
+
+.flex-inner-readonly li {
+  width: 100px;
+}
+

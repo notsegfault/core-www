@@ -1,0 +1,56 @@
+.zoom-in-zoom-out {
+  animation: zoominout 1s infinite alternate ease-in-out;
+}
+
+.zoom-in-zoom-out2 {
+  animation: zoominout2 1s infinite alternate ease-in-out;
+}
+
+@keyframes zoominout {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes zoominout2 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+.rainbow {
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+.rainbow_text_animated {
+  background: linear-gradient(to right, #6666ff, #0099ff , #012b01, #ff3399, #6666ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow_animation 6s ease-in-out infinite;
+  background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+  0%,100% {
+      background-position: 0 0;
+  }
+
+  50% {
+      background-position: 100% 0;
+  }
+}
+
+@keyframes smallfadeintout {
+  50% {
+    opacity: 1;
+  }
+}

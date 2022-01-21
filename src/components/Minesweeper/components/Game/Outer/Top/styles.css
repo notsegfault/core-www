@@ -1,0 +1,16 @@
+.top {
+  height: 26px;
+  margin: 5px;
+  border: 3px inset #EEE;
+  background-color: #BBB;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.minesRemaining {
+  float: left;
+}
+
+.timer {
+  float: right;
+}

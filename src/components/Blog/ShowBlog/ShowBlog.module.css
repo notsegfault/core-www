@@ -1,0 +1,47 @@
+.cardpost_image {
+  position: relative;
+  min-height: 13.3125rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.authorimg {
+  transform: translateY(50%);
+  margin-left: 1.5625rem;
+  position: absolute;
+  bottom: 0;
+  top: 8rem;
+  left: -1rem;
+  z-index: 999;
+  display: flex!important;
+}
+
+.authorimg a {
+  box-shadow: 0 0 0 0.125rem #fff, 0 0.1875rem 0.4375rem rgba(90, 97, 105, 0.5);
+  display: block;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  text-indent: -9999px;
+  width: 3.1875rem;
+  height: 3.1875rem;
+}
+
+.cardText {
+  display: block;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  font-weight: 500;
+  color: #5a6169;
+  font-size: 1rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 767px) {
+  .authorimg {
+    top: 7rem;
+  }
+}

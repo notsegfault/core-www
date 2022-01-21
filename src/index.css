@@ -1,0 +1,205 @@
+:root {
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --app-bar-height: 44px;
+  --offset-height: 70px;
+  --desktop-height: calc(100% - var(--safe-area-inset-bottom) - var(--app-bar-height));
+}
+
+html {
+  overflow: hidden;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 1.5rem !important;
+}
+
+h2 {
+  font-size: 1.3rem !important;
+}
+
+#appbar {
+  top: auto;
+  bottom: calc(var(--safe-area-inset-bottom) - 5px);
+  max-height: calc(var(--app-bar-height) + 5px);
+}
+
+@supports (bottom: calc(var(--safe-area-inset-bottom) - 5px)) {
+  #appbar {
+    bottom: -5px;
+  }
+}
+
+#start-menu {
+  position: fixed;
+  left: 0;
+  bottom: calc(var(--app-bar-height) - var(--safe-area-inset-bottom));
+  width: 250px;
+  z-index: 99999;
+}
+
+@supports (bottom: calc(var(--app-bar-height) - var(--safe-area-inset-bottom))) {
+  #start-menu {
+    bottom: var(--app-bar-height);
+  }
+}
+
+#desktop {
+  background: transparent;
+  position: relative;
+  height: var(--desktop-height);
+  min-height: var(--desktop-height);
+  max-height: var(--desktop-height);
+}
+
+#desktop-background {
+  position: fixed;
+  background: teal;
+  z-index: -100;
+  inset: 0px;
+  height: 100%;
+  width: 100%;
+  background-image: url("/background.jpg");
+  background-size: 100% 100%;
+}
+
+#solitaire-iframe {
+  width: 745px;
+  height: 540px;
+}
+
+strong {
+  font-weight: bold !important;
+}
+
+pre {
+  white-space: pre-wrap !important;
+}
+
+.darker {
+  background-color: #c0c0c0;
+}
+
+.checkboxes input[type='checkbox'] {
+  min-width: 30px;
+}
+
+.smallfadeintout {
+  opacity: 0.5;
+  animation: smallfadeintout 1s linear infinite;
+}
+
+#fanny-ad-banner {
+  text-align: center;
+  position: absolute;
+  top: 2%;
+  width: 100%;
+}
+
+#fanny-ad-banner img {
+  cursor: pointer;
+  width: '600px';
+  bottom: 5%;
+}
+
+#arcadiagroup-audit-banner {
+  position: absolute;
+  background: #ffffd4;
+  border: 4px black;
+  border-radius: 5px;
+  bottom: 5%;
+  right: 1%;
+  max-width: 150px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+}
+
+#core-message {
+  text-align: center;
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 640px;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes smallfadeintout {
+  50% {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  html {
+    zoom: 0.77 !important;
+    font-size: inherit;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  html {
+    zoom: 0.9;
+    font-size: 14px !important;
+  }
+  #fanny-ad-banner {
+    display: none !important;
+  }
+  #arcadiagroup-audit-banner {
+    top: 5%;
+    bottom: auto;
+  }
+  #core-message {
+    font-size: 1em !important;
+    width: 90%;
+    bottom: 2%;
+  }
+
+  .react-draggable {
+    transform: translate(0px, 0px) !important;
+  }
+  .balance-display {
+    font-size: 1.2em !important;
+  }
+}
+
+@media only screen and (max-device-width: 767px) {
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    -webkit-overflow-scrolling: auto;
+  }
+  ::-webkit-scrollbar:vertical {
+    width: 10px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;  
+    border: 2px solid #ffffff;
+  }
+  ::-webkit-scrollbar-track {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 10px;  
+    background-color: #ffffff;
+  }
+}
