@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Hourglass,
@@ -308,13 +308,11 @@ const MyWalletWindow = props => {
         <Tabs value={activeTab} onChange={handleChange}>
           <CoreTab value={0}> Summary </CoreTab>
           {wallet.account && <CoreTab value={1}> Farm </CoreTab>}
-          <CoreTab value={2} style={{display: "block"}}> Govern </CoreTab>
-          <CoreTab value={3} style={{display: "none"}}> Migration <img style={{marginLeft: "5px"}} src={newIMG} /></CoreTab>
+          <CoreTab value={3}> Migration <img style={{marginLeft: "5px"}} src={newIMG} /></CoreTab>
         </Tabs>
         <CoreTabBody>
           {activeTab === 0 && <SummaryTab setWalletWindowState={setState} />}
           {activeTab === 1 && <FarmingTab />}
-          {activeTab === 2 && <>Work In Progress</>}
           {activeTab === 3 && <CoreDAOMigration />}
         </CoreTabBody>
       </CoreWindowContent>

@@ -80,6 +80,7 @@ export const addressMap = {
   coreDaoLp1: '0xF6Dd68031a22c8A3F1e7a424cE8F43a1e1A3be3E',
   coreDaoLp2: '0xb8ee07b5ed2ff9dae6c504c9dee84151f844a591',
   coreDaoLp3: '0xcA00F8eef4cE1F9183E06fA25fE7872fEDcf7456',
+  coreDAO: '0xf66Cd2f8755a21d3c8683a10269F795c0532Dd58',
 
   coredaoTreasury: '0xe508a37101FCe81AB412626eE5F1A648244380de',
 

@@ -87,6 +87,7 @@ export class Contracts {
     this.wCORE = new this.web3.eth.Contract(wCORE.abi);
     this.fanny = new this.web3.eth.Contract(FANNY.abi);
     this.cDAI = new this.web3.eth.Contract(cDAI.abi);
+    this.coreDAO = new this.web3.eth.Contract(cDAI.abi);
     this.DAI = new this.web3.eth.Contract(DAI.abi);
     this.CBTC = new this.web3.eth.Contract(CBTC.abi);
 
@@ -151,6 +152,8 @@ export class Contracts {
     this.encore.options.address = addressMap['encore'];
     this.UNIUSDT.options.address = addressMap['UNIUSDT'];
     this.CoreDAOTreasury.options.address = addressMap['coredaoTreasury'];
+
+    this.coreDAO.options.address = addressMap['coreDAO'];
 
     // Vaults
     this.COREVAULT.options.address = addressMap['COREVAULT'];

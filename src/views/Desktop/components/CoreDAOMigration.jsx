@@ -8,7 +8,7 @@ import { DATA_UNAVAILABLE, pairInfoMap } from '../../../yam/lib/constants';
 import { useWallet } from 'use-wallet';
 import modemIMG from '../../../assets/img/modem.png';
 import useYam from '../../../hooks/useYam';
-import { useUserPoolPending, useUserStakedInPool, useWeb3 } from '../../../hooks';
+import { useUserPoolPending, useUserStakedInPool, useUserTokenBalance, useWeb3 } from '../../../hooks';
 import { claimCORE } from '../../../utils';
 import ScrambleDisplay from '../../../components/Text/ScrambleDisplay';
 import { WindowsContext } from '../../../contexts/Windows';
@@ -39,6 +39,7 @@ const CoreDAOMigration = () => {
   const wallet = useWallet();
   const yam = useYam();
   const governance = useGovernance();
+  const coreDAOBalance = useUserTokenBalance("coreDAO");
   const [delegateeTxt, setDelegateeTxt] = useState('');
   const windowsContext = React.useContext(WindowsContext);
   const useLp1Allowance = useUserApprovalOfContract("CoreDAOTreasury", "coreDaoLp1");
@@ -63,12 +64,27 @@ const CoreDAOMigration = () => {
       const transaction = yam.contracts.CoreDAOTreasury.methods.wrapVouchers(wallet.account, userVouchers.value.lp1, userVouchers.value.lp2, userVouchers.value.lp3);
       const transactionGasEstimate = await transaction.estimateGas({ from: wallet.account });
   
+      const balanceBefore = new BigNumber(await yam.contracts["coreDAO"].methods.balanceOf(wallet.account).call());
+
       await transaction.send({
         from: wallet.account,
         gas: transactionGasEstimate
       });
 
+      const balanceAfter = new BigNumber(await yam.contracts["coreDAO"].methods.balanceOf(wallet.account).call());
+
       userVouchers.refresh();
+  
+      windowsContext.showDialog(
+        'Success',
+        <div>
+          You have migrated your Core Voucher LPs for {printable.getPrintableTokenAmount(balanceAfter.minus(balanceBefore))} CoreDAO tokens!<br/><br/>
+          You can add them to your wallet with the following ERC20 Address:<br/><br/>
+
+          0xf66Cd2f8755a21d3c8683a10269F795c0532Dd58
+          <br/>
+            </div>,
+        'Ok');
 
     } catch (error) {
       const transactionError = transactions.getTransactionError(error);
@@ -192,9 +208,12 @@ const CoreDAOMigration = () => {
         If you have staked LPs, you'll need to unstake them first before migrating.
         </div>
 
+    <div style={{marginTop: "1em", marginBottom: "1em"}}>
+      CoreDAO Balance: {printable.getPrintableTokenAmount(coreDAOBalance.balance)}
+    </div>
     {(needApproval() && renderApprovals()) || <TransactionButton
         onClick={() => migrateLpToCoreDAO()}
-        text="Migrate LP -> CoreDAO"
+        text={userVouchers.value.total.eq(new BigNumber(0)) ? "No LP to migrate" : "Migrate LP -> CoreDAO"}
         textLoading="Migrating..."
         disabled={userVouchers.value.total.eq(new BigNumber(0)) || needApproval()}
       />}
