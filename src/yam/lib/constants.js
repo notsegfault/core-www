@@ -9,6 +9,8 @@ const ONE_HOUR_IN_SECONDS = ONE_MINUTE_IN_SECONDS.times(60);
 const ONE_DAY_IN_SECONDS = ONE_HOUR_IN_SECONDS.times(24);
 const ONE_YEAR_IN_SECONDS = ONE_DAY_IN_SECONDS.times(365);
 
+export const CoreBurnedDuneAnalytics = "https://dune.xyz/embeds/377149/718378/0f6b7a2a-c1d3-42c5-94ab-cc466f9f2ffc";
+
 export const DATA_UNAVAILABLE = '--';
 
 export const INTEGERS = {

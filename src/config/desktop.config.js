@@ -7,13 +7,15 @@ import infoIMG from '../assets/img/info.png';
 import modemIMG from '../assets/img/modem.png';
 import fannyIMG from '../assets/img/fannyIcon.png';
 import installerIMG from '../assets/img/installer.png';
-
+import coreburnIMG from '../assets/img/coreburn.png';
 /**
  * List of windows that should be open when the website is loaded.
  * Each item property are used as arguments for openWindow.1
  */
 export const defaultOpenedWindows = [{
-  type: WindowType.MyWallet
+  type: WindowType.MyWallet,
+}, {
+  type: WindowType.CoreBurned,
 }];
 
 /**
@@ -55,6 +57,14 @@ WindowComponents[WindowType.Router] = {
   taskbar: {
     icon: modemIMG,
     text: 'Router',
+    alwaysVisible: true
+  }
+};
+WindowComponents[WindowType.CoreBurned] = {
+  component: React.lazy(() => import('../views/Desktop/windows/CoreBurned')),
+  taskbar: {
+    icon: coreburnIMG,
+    text: 'burn.exe',
     alwaysVisible: true
   }
 };

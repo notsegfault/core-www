@@ -25,4 +25,5 @@ export const WindowType = {
   FannyShippingForm: 'FannyShippingForm',
   FannyReadme: 'FannyReadme',
   FannyOrders: 'FannyOrders',
+  CoreBurned: 'CoreBurned',
 };

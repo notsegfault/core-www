@@ -308,7 +308,7 @@ const MyWalletWindow = props => {
         <Tabs value={activeTab} onChange={handleChange}>
           <CoreTab value={0}> Summary </CoreTab>
           {wallet.account && <CoreTab value={1}> Farm </CoreTab>}
-          <CoreTab value={3}> Migration <img style={{marginLeft: "5px"}} src={newIMG} /></CoreTab>
+          {/*<CoreTab value={3}> Migration <img style={{marginLeft: "5px"}} src={newIMG} /></CoreTab>*/}
         </Tabs>
         <CoreTabBody>
           {activeTab === 0 && <SummaryTab setWalletWindowState={setState} />}
