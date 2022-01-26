@@ -1,6 +1,6 @@
 import React from 'react';
+import { useWeb3 } from '.';
 import { DATA_UNAVAILABLE, pairInfoMap, getPairFromWrappedPair } from '../yam/lib/constants';
-import useYam from "./useYam";
 
 const REFRESH_RATE = 60 * 1000;
 
@@ -11,7 +11,7 @@ const useUniswapPairBalances = (pairName) => {
     const pairInfo = pairInfoMap[pairName] || getPairFromWrappedPair(pairName);
     const wrappedPairName = pairInfo.wrappedPairName;
 
-    const yam = useYam();
+    const web3 = useWeb3();
     const [balances, setBalances] = React.useState({
         balanceToken: DATA_UNAVAILABLE,
         balanceCore: DATA_UNAVAILABLE,
@@ -20,16 +20,16 @@ const useUniswapPairBalances = (pairName) => {
     React.useEffect(() => {
         let interval;
 
-        if (yam) {
+        if (web3) {
             update();
             interval = setInterval(update, REFRESH_RATE);
         }
 
         return () => clearInterval(interval);
-    }, [yam]);
+    }, [web3]);
 
     async function update() {
-        const pair = yam.contracts[wrappedPairName];
+        const pair = web3.contracts[wrappedPairName];
         const balances = await pair.methods.getReserves().call();
         let balanceCore;
         let balanceToken;
