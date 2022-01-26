@@ -26,4 +26,5 @@ export const WindowType = {
   FannyReadme: 'FannyReadme',
   FannyOrders: 'FannyOrders',
   CoreBurned: 'CoreBurned',
+  CoreBurnedChart: 'CoreBurnedChart',
 };

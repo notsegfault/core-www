@@ -68,6 +68,16 @@ WindowComponents[WindowType.CoreBurned] = {
     alwaysVisible: true
   }
 };
+
+WindowComponents[WindowType.CoreBurnedChart] = {
+  component: React.lazy(() => import('../views/Desktop/windows/CoreBurnedChart')),
+  taskbar: {
+    icon: coreburnIMG,
+    text: 'burn feed',
+    alwaysVisible: false
+  }
+};
+
 WindowComponents[WindowType.Diablo] = {
   component: React.lazy(() => import('../views/Desktop/windows/Diablo'))
 };
