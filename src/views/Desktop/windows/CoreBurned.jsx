@@ -52,11 +52,13 @@ const CoreBurned = props => {
   const [coreValue, setCoreValue] = useState(DATA_UNAVAILABLE);
 
   React.useEffect(() => {
-    if (corePrice.inUSD !== DATA_UNAVAILABLE && stats.burned !== DATA_UNAVAILABLE) {
+    if (corePrice.inUSD !== DATA_UNAVAILABLE &&  stats.burned !== DATA_UNAVAILABLE) {
       const burned = stats.burned.toString() / 1e18;
       setCoreValue(`$${(burned * corePrice.inUSD).toLocaleString('en')}`);
+    } else {
+      stats.refresh();
     }
-  }, [corePrice, stats]);
+  }, [corePrice.inUSD, stats.burned]);
   return (
     <CoreWindow
       {...props}
