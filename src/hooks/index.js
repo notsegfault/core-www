@@ -32,3 +32,4 @@ export { default as useCorePrice } from './useCorePrice';
 export { default as useTokenDecimals } from './useTokenDecimals';
 export { default as useUserVouchers } from './useUserVouchers';
 export { default as useGovernance } from './useGovernance';
+export { default as useBurnedCore } from './useBurnedCore';
