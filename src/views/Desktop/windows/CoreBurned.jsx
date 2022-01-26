@@ -20,10 +20,10 @@ const HamsterBurnContainer = styled.div`
   }
 `;
 
-const HamsterBurnImage = styled.img`
+const HamsterBurnVideoContainer = styled.video`
   width: 100%;
   @media only screen and (max-width: 767px) {
-    width: 70%;
+    width: 65%;
   }
 `;
 
@@ -45,18 +45,18 @@ const Content = styled.div`
   }
 `;
 const CoreBurned = props => {
-  const stats = useBurnedCore()
+  const stats = useBurnedCore();
   const corePrice = useCorePrice();
   const windowsContext = React.useContext(WindowsContext);
 
   const [coreValue, setCoreValue] = useState(DATA_UNAVAILABLE);
 
-  React.useEffect(() =>{
-    if(corePrice.inUSD !== DATA_UNAVAILABLE && stats.burned !== DATA_UNAVAILABLE) {
+  React.useEffect(() => {
+    if (corePrice.inUSD !== DATA_UNAVAILABLE && stats.burned !== DATA_UNAVAILABLE) {
       const burned = stats.burned.toString() / 1e18;
-      setCoreValue(`$${(burned * corePrice.inUSD).toLocaleString('en')}`) 
+      setCoreValue(`$${(burned * corePrice.inUSD).toLocaleString('en')}`);
     }
-  }, [corePrice, stats])
+  }, [corePrice, stats]);
   return (
     <CoreWindow
       {...props}
@@ -73,22 +73,35 @@ const CoreBurned = props => {
         <iframe style={{marginTop: "1em"}} src={CoreBurnedDuneAnalytics} width="100%" height="100%"/>*/}
         <Content>
           <HamsterBurnContainer>
-            <HamsterBurnImage src={hamsterBurnIMG} alt="hamster-burn" />
+            <HamsterBurnVideoContainer autoPlay loop>
+              <source src={`${process.env.PUBLIC_URL}/coreburn.mp4`} type="video/mp4" />
+            </HamsterBurnVideoContainer>
           </HamsterBurnContainer>
           <TextContainer>
-            <div style={{alignSelf: "center", marginTop: "1em", marginBottom: "3em"}}>
+            <div style={{ alignSelf: 'center', marginTop: '1em', marginBottom: '3em' }}>
               <div style={{ fontSize: '3em' }}>coreburn.exe initiated</div>
               <div style={{ fontSize: '6em' }}>Day {stats.day}</div>
-              <div style={{fontSize: '3em', textShadow: "#8a8a8a 6px 6px 5px"}}>
-                <span style={{color: '#d60000'}}>{printable.getPrintableTokenAmount(stats.burned, 18, 0)}</span> / 8300 <span style={{ fontSize: '0.5em' }}>CORE</span>
+              <div style={{ fontSize: '3em', textShadow: '#8a8a8a 6px 6px 5px' }}>
+                <span style={{ color: '#d60000' }}>
+                  {printable.getPrintableTokenAmount(stats.burned, 18, 0)}
+                </span>{' '}
+                / 8300 <span style={{ fontSize: '0.5em' }}>CORE</span>
               </div>
-              <div style={{marginTop: "1em", fontSize: '3em'}}>Value Burned: <div style={{textShadow: "#8a8a8a 6px 6px 5px"}}>{coreValue}</div></div>
+              <div style={{ marginTop: '1em', fontSize: '3em' }}>
+                Value Burned: <div style={{ textShadow: '#8a8a8a 6px 6px 5px' }}>{coreValue}</div>
+              </div>
             </div>
+            <Anchor
+              href="#"
+              style={{  fontSize: '1.5em' }}
+              onClick={e => {
+                windowsContext.openWindow(WindowType.CoreBurnedChart, e);
+              }}
+            >
+              Open Burn History Chart...
+            </Anchor>
           </TextContainer>
         </Content>
-        <Anchor href="#" style={{ float: "right", fontSize: '1.5em' }} onClick={(e) => {
-                windowsContext.openWindow(WindowType.CoreBurnedChart, e);
-              }}>Open Burn History Chart...</Anchor>
       </CoreScrollableContent>
     </CoreWindow>
   );

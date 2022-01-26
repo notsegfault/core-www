@@ -16,7 +16,7 @@ const CoreBurnedChart = props => {
       left="10px"
     >
       <CoreWindowContent>
-        <iframe style={{marginTop: "1em"}} src={CoreBurnedDuneAnalytics} width="100%" height="100%"/>
+        <iframe src={CoreBurnedDuneAnalytics} width="100%" height="100%"/>
       </CoreWindowContent>
     </CoreWindow>
   );
