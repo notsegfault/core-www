@@ -24,7 +24,6 @@ const useUniswapPairBalances = (pairName) => {
             update();
             interval = setInterval(update, REFRESH_RATE);
         }
-
         return () => clearInterval(interval);
     }, [web3]);
 
