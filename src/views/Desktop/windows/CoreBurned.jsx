@@ -63,7 +63,7 @@ const CoreBurned = props => {
       windowTitle="coreburn.exe"
       top="10px"
       icon={coreBurnIMG}
-      width="1240px"
+      width="980px"
       left="10px"
     >
       <CoreScrollableContent>
