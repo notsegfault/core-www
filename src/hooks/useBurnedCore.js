@@ -31,11 +31,16 @@ const useBurnedCore = tokenName => {
     }
   
     const balance = new BigNumber(await web3.contracts.core.methods.balanceOf('0x5A16552f59ea34E44ec81E58b3817833E9fD5436').call());
-    //const balance = new BigNumber("4149000000000000000000")
-    const burned = (new BigNumber('8299802830264467405472')).minus(balance);
+    let burned = (new BigNumber('8299802830264467405472')).minus(balance);
+
     const burnedPerDay = new BigNumber('1185000000000000000000');
     let day = (burned.shiftedBy(18).dividedBy(burnedPerDay)).toString() / 1e18;
     day = Math.ceil(parseFloat(day))
+
+    if(burned.gte(new BigNumber('8200000000000000000000'))) {
+      burned = new BigNumber('8300000000000000000000')
+    }
+
     setData(data => ({
       ...data,
       day,
