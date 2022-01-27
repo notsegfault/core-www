@@ -38,7 +38,9 @@ const useBurnedCore = tokenName => {
     day = Math.ceil(parseFloat(day))
 
     if(burned.gte(new BigNumber('8200000000000000000000'))) {
-      burned = new BigNumber('8300000000000000000000')
+      burned = 8300;
+    } else {
+      burned = Math.ceil(burned.toString() / 1e18);
     }
 
     setData(data => ({

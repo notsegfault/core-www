@@ -52,9 +52,8 @@ const CoreBurned = props => {
   const [coreValue, setCoreValue] = useState(DATA_UNAVAILABLE);
 
   React.useEffect(() => {
-    if (corePrice.inUSD !== DATA_UNAVAILABLE &&  stats.burned !== DATA_UNAVAILABLE) {
-      const burned = stats.burned.toString() / 1e18;
-      setCoreValue(`$${(burned * corePrice.inUSD).toLocaleString('en')}`);
+    if (corePrice.inUSD !== DATA_UNAVAILABLE && stats.burned !== DATA_UNAVAILABLE) {
+      setCoreValue(`$${(stats.burned * corePrice.inUSD).toLocaleString('en')}`);
     }
   }, [corePrice.inUSD, stats.burned]);
   return (
@@ -83,7 +82,7 @@ const CoreBurned = props => {
               <div style={{ fontSize: '6em' }}>Day {stats.day}</div>
               <div style={{ fontSize: '3em', textShadow: '#8a8a8a 6px 6px 5px' }}>
                 <span style={{ color: '#d60000' }}>
-                  {printable.getPrintableTokenAmount(stats.burned, 18, 0)}
+                  {printable.getPrintableTokenAmount(stats.burned, 0, 0)}
                 </span>{' '}
                 / 8300 <span style={{ fontSize: '0.5em' }}>CORE</span>
               </div>
