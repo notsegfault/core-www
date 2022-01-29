@@ -10,7 +10,7 @@ const ONE_DAY_IN_SECONDS = ONE_HOUR_IN_SECONDS.times(24);
 const ONE_YEAR_IN_SECONDS = ONE_DAY_IN_SECONDS.times(365);
 
 // https://dune.xyz/queries/377149/718378
-export const CoreBurnedDuneAnalytics = "https://dune.xyz/embeds/377149/718378/16ebad87-be4f-48e1-bcdb-0a63c65fa0d9";
+export const CoreBurnedDuneAnalytics = "https://dune.xyz/embeds/377149/718314/534bd8cc-da0a-4273-af8e-651ff502af38";
 
 export const DATA_UNAVAILABLE = '--';
 
