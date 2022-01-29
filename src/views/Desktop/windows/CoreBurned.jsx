@@ -90,15 +90,6 @@ const CoreBurned = props => {
                 Value Burned: <div style={{ textShadow: '#8a8a8a 6px 6px 5px' }}>{coreValue}</div>
               </div>
             </div>
-            <Anchor
-              href="#"
-              style={{  fontSize: '1.5em' }}
-              onClick={e => {
-                windowsContext.openWindow(WindowType.CoreBurnedChart, e);
-              }}
-            >
-              Open Burn History Chart...
-            </Anchor>
           </TextContainer>
         </Content>
       </CoreScrollableContent>
