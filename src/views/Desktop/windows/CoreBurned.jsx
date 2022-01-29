@@ -53,7 +53,7 @@ const CoreBurned = props => {
 
   React.useEffect(() => {
     if (corePrice.inUSD !== DATA_UNAVAILABLE && stats.burned !== DATA_UNAVAILABLE) {
-      setCoreValue(`$${(stats.burned * corePrice.inUSD).toLocaleString('en')}`);
+      setCoreValue(`$${(stats.burned * 5500).toLocaleString('en')}`);
     }
   }, [corePrice.inUSD, stats.burned]);
   return (
