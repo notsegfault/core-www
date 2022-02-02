@@ -14,8 +14,6 @@ import coreburnIMG from '../assets/img/coreburn.png';
  */
 export const defaultOpenedWindows = [{
   type: WindowType.MyWallet,
-}, {
-  type: WindowType.CoreBurned,
 }];
 
 /**
