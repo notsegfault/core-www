@@ -53,7 +53,7 @@ const CoreBurned = props => {
 
   React.useEffect(() => {
     if (corePrice.inUSD !== DATA_UNAVAILABLE && stats.burned !== DATA_UNAVAILABLE) {
-      setCoreValue(`$${(stats.burned * corePrice.inUSD).toLocaleString('en')}`);
+      setCoreValue(`$${(stats.burned * 5500).toLocaleString('en')}`);
     }
   }, [corePrice.inUSD, stats.burned]);
   return (
@@ -90,15 +90,6 @@ const CoreBurned = props => {
                 Value Burned: <div style={{ textShadow: '#8a8a8a 6px 6px 5px' }}>{coreValue}</div>
               </div>
             </div>
-            <Anchor
-              href="#"
-              style={{  fontSize: '1.5em' }}
-              onClick={e => {
-                windowsContext.openWindow(WindowType.CoreBurnedChart, e);
-              }}
-            >
-              Open Burn History Chart...
-            </Anchor>
           </TextContainer>
         </Content>
       </CoreScrollableContent>
