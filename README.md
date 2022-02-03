@@ -6,6 +6,8 @@ yarn start
 ```
 
 # Fleek Deployment
+Base directory: Not set
+
 Build command:
 ```yarn && yarn build```
 
