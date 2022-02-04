@@ -37,8 +37,6 @@ Powered by Real Yield
 
 To encourage real value and TVL to flow into CORE, CORE smart contracts employ interchangeable strategies that farm the coins inside the pools. This gives a great incentive to anyone who wants to farm CORE with coins other than CORE/ETH LP. All the yield from staked funds will go to market-buy CORE. This creates a positive relationship for both parties. CORE holders will always benefit from yield bearing activities done on the CORE smart contracts. Even when farmers sell, a transfer fee on sales of CORE tokens are returned to the farming pools. This means buying pressure will generally be more intense than selling pressure.
 
-Bottom line - Governance ensures APY is higher in CORE Vault pools.
-
 Many believe that the act of adding additional pools is disincentivized by the fact that it can dilute the rewards for the pools people are currently farming. In our model, this is lessened by the nature of CORE fees being paid out by additional farming pools. Although farmers are diluted in their rewards, the CORE they have appreciate in value due to the positive market pressure.
 
 
@@ -71,8 +69,6 @@ CORE is designed for great community governance. The community decides everythin
 If the holders decide COREVault should have a YFI pool, we can set
 the ratio of fees it will be able to distribute, as well as when people should be
 able to withdraw YFI tokens from it.
-
-This creates an incentive to hold even more CORE by the holders of YFI tokens. Let the governance begin.
 
 =====================
 10000 CORE Forever
