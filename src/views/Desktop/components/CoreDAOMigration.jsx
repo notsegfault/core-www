@@ -59,6 +59,10 @@ const CoreDAOMigration = () => {
         </ul>
       </>);
 
+      console.log("userVouchers.value.lp1", userVouchers.value.lp1.toString());
+      console.log("userVouchers.value.lp2", userVouchers.value.lp2.toString());
+      console.log("userVouchers.value.lp3", userVouchers.value.lp3.toString());
+
       if (!confirm) return;
 
       const transaction = yam.contracts.CoreDAOTreasury.methods.wrapVouchers(wallet.account, userVouchers.value.lp1, userVouchers.value.lp2, userVouchers.value.lp3);
