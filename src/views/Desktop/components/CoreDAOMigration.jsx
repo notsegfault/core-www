@@ -209,7 +209,12 @@ const CoreDAOMigration = () => {
         </div>
 
     <div style={{marginTop: "1em", marginBottom: "1em"}}>
-      CoreDAO Balance: {printable.getPrintableTokenAmount(coreDAOBalance.balance)}
+      <ul>
+      <li>CoreDAO Balance: {printable.getPrintableTokenAmount(coreDAOBalance.balance)}</li>
+      <li>Voucher LP1 Balance: {printable.getPrintableTokenAmount(userVouchers.value.lp1, 18, 5)} LP</li>
+      <li>Voucher LP2 Balance: {printable.getPrintableTokenAmount(userVouchers.value.lp2, 18 - 5, 5)} cmLP</li>
+      <li>Voucher LP3 Balance: {printable.getPrintableTokenAmount(userVouchers.value.lp3, 18, 5)} LP</li>
+      </ul>
     </div>
     {(needApproval() && renderApprovals()) || <TransactionButton
         onClick={() => migrateLpToCoreDAO()}
