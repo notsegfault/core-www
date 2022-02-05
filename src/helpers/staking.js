@@ -7,6 +7,8 @@ const getPairNameByPid = (pid) => {
       return 'coreDaoLp2';
     case 2:
       return 'coreDaoLp3';
+    case 3:
+      return 'coreDAO';
   }
 };
 

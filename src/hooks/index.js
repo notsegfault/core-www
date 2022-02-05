@@ -11,6 +11,7 @@ export { default as useUserContributed } from './useUserContributed';
 export { default as useUserStakedInPool } from './useUserStakedInPool';
 export { default as useValuePerLPToken } from './useValuePerLPToken';
 export { default as useVaultRewardStats } from './useVaultRewardStats';
+export { default as useVaultTokenRewardStats } from './useVaultTokenRewardStats';
 export { default as useUserPoolPending } from './useUserPoolPending';
 export { default as useCoreBalance } from './useCoreBalance';
 export { default as useCoreLPBalance } from './useCoreLPBalance';

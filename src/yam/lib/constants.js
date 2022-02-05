@@ -125,7 +125,8 @@ pairInfoMap['coreDaoLp1'] = {
   tokenName: 'WETH',
   friendlyTokenName: 'ETH',
   pid: 0,
-  address: addressMap['coreDaoLp1']
+  address: addressMap['coreDaoLp1'],
+  isToken: false
 };
 pairInfoMap['coreDaoLp2'] = {
   name: 'CORE/CBTC',
@@ -137,7 +138,8 @@ pairInfoMap['coreDaoLp2'] = {
   tokenName: 'CBTC',
   friendlyTokenName: 'BTC',
   pid: 1,
-  address: addressMap['coreDaoLp2']
+  address: addressMap['coreDaoLp2'],
+  isToken: false
 };
 pairInfoMap['coreDaoLp3'] = {
   name: 'CORE/DAI',
@@ -149,17 +151,28 @@ pairInfoMap['coreDaoLp3'] = {
   tokenName: 'cDAI',
   friendlyTokenName: 'DAI',
   pid: 2,
-  address: addressMap['coreDaoLp3']
+  address: addressMap['coreDaoLp3'],
+  isToken: false
 };
-
+pairInfoMap['coreDAO'] = {
+  name: 'CoreDAO',
+  supplyScale: 1,
+  unit: '',
+  isToken: true,
+  tokenName: 'CoreDAO',
+  friendlyTokenName: 'CoreDAO',
+  pid: 3,
+  address: addressMap['coreDAO']
+};
 export const ethereumStats = {};
 ethereumStats.approximatedBlockPerDay = 6650;
 ethereumStats.approximatedBlockPerYear = ethereumStats.approximatedBlockPerDay * 365;
 
 export const yieldPercentagePerPairs = {
-  'CORExWETH': 0.6,
-  'CORExcBTC': 0.2,
-  'cDAIxwCORE': 0.2,
+  'CORExWETH': 0.0,
+  'CORExcBTC': 0.0,
+  'cDAIxwCORE': 0.0,
+  'CoreDAO': 1.0
 };
 
 /**

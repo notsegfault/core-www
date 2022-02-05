@@ -1,14 +1,8 @@
 import React from 'react';
 import { CoreModalWindow, CoreWindowContent } from '../../../components/Windows';
-import {
-  Button,
-  Anchor,
-  Hourglass
-} from 'react95';
+import { Button, Anchor, Hourglass } from 'react95';
 
-import {
-  useYam
-} from '../../../hooks';
+import { useYam } from '../../../hooks';
 
 import BigNumber from 'bignumber.js';
 import warningIMG from '../../../assets/img/warning.png';
@@ -55,9 +49,9 @@ const TransactionWindow = ({
       case 'withdraw-core-fanny':
         return 'Withdrawing CORE from the Fanny Vault';
       case 'stake':
-        return 'Staking LP in the CORE Vault';
+        return 'Staking in the CORE Vault';
       case 'withdraw':
-        return 'Withdrawing LP from the CORE Vault';
+        return 'Withdrawing from the CORE Vault';
       case 'liquidity-zap':
         return 'Adding liquidity';
       case 'LGE2':
@@ -87,14 +81,15 @@ const TransactionWindow = ({
         return <Erc95WrappingTip />;
       case 'unwrapErc95':
         return <Erc95WrappingTip />;
-      default: return <></>
+      default:
+        return <></>;
     }
   };
 
   const doAction = () => {
     (async () => {
-      console.log("Doing action")
-      console.log("Transaciton value is ", transactionValue.toString());
+      console.log('Doing action');
+      console.log('Transaciton value is ', transactionValue.toString());
       let tx;
       try {
         console.log(`Inside action pid is ${additional?.pid}`);
@@ -113,7 +108,12 @@ const TransactionWindow = ({
             break;
 
           case 'stake-core-fanny':
-            tx = await fannyService.stake(yam, wallet, transactionValue.times(new BigNumber(10).pow(18)), lockTimeWeeks);
+            tx = await fannyService.stake(
+              yam,
+              wallet,
+              transactionValue.times(new BigNumber(10).pow(18)),
+              lockTimeWeeks
+            );
             break;
 
           case 'withdraw':
@@ -181,7 +181,10 @@ const TransactionWindow = ({
             break;
 
           case 'wrapInErc95':
-            const wrap = yam.contracts[additional.erc95TokenContract].methods.wrap(wallet.account, transactionValue.times(new BigNumber(10).pow(additional.decimals)).toString());
+            const wrap = yam.contracts[additional.erc95TokenContract].methods.wrap(
+              wallet.account,
+              transactionValue.times(new BigNumber(10).pow(additional.decimals)).toString()
+            );
             tx = await wrap.send({
               from: wallet.account,
               gas: 200000,
@@ -189,9 +192,10 @@ const TransactionWindow = ({
             });
             break;
 
-
           case 'unwrapErc95':
-            const unwrap = yam.contracts[additional.erc95TokenContract].methods.unwrap(transactionValue.times(new BigNumber(10).pow(additional.decimals)).toString());
+            const unwrap = yam.contracts[additional.erc95TokenContract].methods.unwrap(
+              transactionValue.times(new BigNumber(10).pow(additional.decimals)).toString()
+            );
             tx = await unwrap.send({
               from: wallet.account,
               gas: 200000,
@@ -238,18 +242,30 @@ const TransactionWindow = ({
 
   const confirmStakingBurnOperation = async () => {
     const displayableAmountToStake = transactionValue.toString();
-    let confirm = await windowsContext.showConfirm('Burning Confirmation', <>Are you sure you want to BURN {displayableAmountToStake} CORE?</>);
+    let confirm = await windowsContext.showConfirm(
+      'Burning Confirmation',
+      <>Are you sure you want to BURN {displayableAmountToStake} CORE?</>
+    );
     if (confirm) {
-      confirm = await windowsContext.showConfirm('Burning Confirmation', <>Are you REALLY REALLY sure you want to BURN {displayableAmountToStake} CORE?</>);
+      confirm = await windowsContext.showConfirm(
+        'Burning Confirmation',
+        <>Are you REALLY REALLY sure you want to BURN {displayableAmountToStake} CORE?</>
+      );
       if (confirm) {
-        return await windowsContext.showConfirm('Burning Confirmation', <>This operation is nonreversible. Are you sure you want to BURN {displayableAmountToStake} CORE?</>);
+        return await windowsContext.showConfirm(
+          'Burning Confirmation',
+          <>
+            This operation is nonreversible. Are you sure you want to BURN{' '}
+            {displayableAmountToStake} CORE?
+          </>
+        );
       }
     }
-  }
+  };
 
   const StakeButton = () => {
     const getStakingButtonText = () => {
-      switch(type) {
+      switch (type) {
         case 'stake-core-fanny':
           if (lockTimeWeeks === 'burn') {
             return 'Burn';
@@ -261,32 +277,34 @@ const TransactionWindow = ({
       }
     };
 
-    return <div style={{ display: 'flex', paddingTop: '0.5rem' }}>
-      <Button
-        disabled={parseFloat(transactionValue) <= 0 ? 'disabled' : ''}
-        onClick={async () => {
-          if (type === 'stake-core-fanny' && lockTimeWeeks === 'burn') {
-            const confirm = await confirmStakingBurnOperation();
-            if (confirm) {
+    return (
+      <div style={{ display: 'flex', paddingTop: '0.5rem' }}>
+        <Button
+          disabled={parseFloat(transactionValue) <= 0 ? 'disabled' : ''}
+          onClick={async () => {
+            if (type === 'stake-core-fanny' && lockTimeWeeks === 'burn') {
+              const confirm = await confirmStakingBurnOperation();
+              if (confirm) {
+                setTransactionStatus('waiting');
+              }
+            } else {
               setTransactionStatus('waiting');
             }
-          } else {
-            setTransactionStatus('waiting');
-          }
-        }}
-        style={{ width: '300px', margin: 'auto' }}
-        primary
-      >
-        {getStakingButtonText()}
-      </Button>
-    </div>
+          }}
+          style={{ width: '300px', margin: 'auto' }}
+          primary
+        >
+          {getStakingButtonText()}
+        </Button>
+      </div>
+    );
   };
 
   const StakeTip = () => (
     <div style={{ display: 'flex', paddingTop: '1rem' }}>
       <img alt="info" src={infoIMG} style={{ paddingRight: '0.5rem' }} />
       <div style={{ maxWidth: '50ch' }}>
-        Staking LP tokens, yields you CORE tokens from transaction fees!
+        Staking yields you CORE tokens from transaction fees!
       </div>
     </div>
   );
@@ -304,7 +322,7 @@ const TransactionWindow = ({
     <div style={{ display: 'flex', paddingTop: '1rem' }}>
       <img alt="warning" src={warningIMG} style={{ paddingRight: '0.5rem' }} />
       <div style={{ maxWidth: '50ch', alignSelf: 'center' }}>
-        Unstaking LP tokens will stop you from earning more fees.
+        Unstaking will stop you from earning more fees.
       </div>
     </div>
   );
@@ -332,7 +350,8 @@ const TransactionWindow = ({
     <div style={{ display: 'flex', paddingTop: '1rem' }}>
       <img alt="info" src={infoIMG} style={{ paddingRight: '0.5rem' }} />
       <div style={{ maxWidth: '50ch', alignSelf: 'center' }}>
-        You can wrap and unwrap between different CORE ERC95 wrapped tokens, at any point without any fees.
+        You can wrap and unwrap between different CORE ERC95 wrapped tokens, at any point without
+        any fees.
       </div>
     </div>
   );
@@ -360,7 +379,7 @@ const TransactionWindow = ({
         style={{ width: '300px', margin: 'auto' }}
         primary
       >
-        {type === 'unwrapErc95' ? 'Unwrap' : "Wrap"}
+        {type === 'unwrapErc95' ? 'Unwrap' : 'Wrap'}
       </Button>
     </div>
   );
@@ -390,7 +409,7 @@ const TransactionWindow = ({
       <LinkButton
         fullWidth
         style={{ marginRight: 8, marginTop: '1rem', marginBottom: '0.5rem' }}
-        onClick={(e) => {
+        onClick={e => {
           if (type === 'liquidity-zap') {
             windowsContext.closeWindow(props.windowName, e);
           } else {
@@ -462,7 +481,7 @@ const TransactionWindow = ({
           Security checklist
           <img
             src={warningIMG}
-            style={{ marginRight: '0.2rem', height: '1em', }}
+            style={{ marginRight: '0.2rem', height: '1em' }}
             alt="warning icon"
           />
         </span>
@@ -542,13 +561,15 @@ const TransactionWindow = ({
       case 'unwrapErc95':
         return additional.tokenName;
       default:
-        switch(additional?.pid) {
+        switch (additional?.pid) {
+          case 0:
+            return 'CORE/WETH UNIv2 LP';
           case 1:
             return 'cBTC/CORE UNIv2 LP';
           case 2:
             return 'wCORE/coreDAI UNIv2 LP';
-          default:
-            return 'CORE/WETH UNIv2 LP';;
+          case 3:
+            return 'CoreDAO';
         }
     }
   };
@@ -572,11 +593,12 @@ const TransactionWindow = ({
       case 'liquidity-zap':
         return '0x0c57af6c';
       case 'wrapInErc95':
-        return '0xbf376c7a'
+        return '0xbf376c7a';
       case 'LGE2':
         if (additional?.tokenName === 'eth') return '0xed995307';
         else return '0x14711c9d';
-      default: return undefined;
+      default:
+        return undefined;
     }
   };
 
@@ -591,12 +613,13 @@ const TransactionWindow = ({
       case 'liquidity-zap':
         return 'Zaping Liquidity';
       case 'wrapInErc95':
-        return 'Wrapping'
+        return 'Wrapping';
       case 'unwrapErc95':
-        return 'UnWrapping'
+        return 'UnWrapping';
       case 'LGE2':
         return 'Contributing Liquidity';
-      default: return undefined;
+      default:
+        return undefined;
     }
   };
 
@@ -604,8 +627,8 @@ const TransactionWindow = ({
     <CoreModalWindow
       {...props}
       windowTitle={getTitle()}
-      minWidth='400px'
-      top='20vh'
+      minWidth="400px"
+      top="20vh"
       left={`${window.innerWidth / 3}px`}
     >
       <CoreWindowContent>
@@ -622,22 +645,24 @@ const TransactionWindow = ({
                 setTransactionValue={setTransactionValue}
               />
             ) : (
-                <WithdrawOrStakeInputDialog
-                  pid={additional?.pid}
-                  tokenName={additional?.tokenName}
-                  setTransactionStatus={setTransactionStatus}
-                  type={type}
-                  setTransactionValue={setTransactionValue}
-                  lockTimeWeeks={lockTimeWeeks}
-                  setLockTimeWeeks={setLockTimeWeeks}
-                />
-              )}
+              <WithdrawOrStakeInputDialog
+                pid={additional?.pid}
+                tokenName={additional?.tokenName}
+                setTransactionStatus={setTransactionStatus}
+                type={type}
+                setTransactionValue={setTransactionValue}
+                lockTimeWeeks={lockTimeWeeks}
+                setLockTimeWeeks={setLockTimeWeeks}
+              />
+            )}
             <>{getCurrentCallToAction()}</>
           </>
         )}
         {transactionStatus === 'error' && !transactionHash && <TranscationError />}
 
-        {transactionStatus === 'waiting' && !transactionHash && <TransactionInProgress wallet={wallet} />}
+        {transactionStatus === 'waiting' && !transactionHash && (
+          <TransactionInProgress wallet={wallet} />
+        )}
         {transactionHash && <TransactionSuccess />}
       </CoreWindowContent>
     </CoreModalWindow>
