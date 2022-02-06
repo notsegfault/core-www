@@ -131,7 +131,7 @@ const CoreDAOMigration = () => {
     if(useLp1Allowance.amount !== DATA_UNAVAILABLE && userVouchers.value.lp1 !== DATA_UNAVAILABLE && useLp1Allowance.amount.lt(userVouchers.value.lp1)) {
       return <TransactionButton
         onClick={() => approve("coreDaoLp1")}
-        text="Approve Lp1 Migration"
+        text="(Step 1/3) Approve Lp1 Migration"
         textLoading="Approving..."
       />
     };
@@ -139,7 +139,7 @@ const CoreDAOMigration = () => {
     if(useLp2Allowance.amount !== DATA_UNAVAILABLE && userVouchers.value.lp2 !== DATA_UNAVAILABLE && useLp2Allowance.amount.lt(userVouchers.value.lp2)) {
       return <TransactionButton
         onClick={() => approve("coreDaoLp2")}
-        text="Approve Lp2 Migration"
+        text="(Step 2/3) Approve Lp2 Migration"
         textApproving="Approving..."
       />
     };
@@ -147,7 +147,7 @@ const CoreDAOMigration = () => {
     if(useLp3Allowance.amount !== DATA_UNAVAILABLE && userVouchers.value.lp3 !== DATA_UNAVAILABLE && useLp3Allowance.amount.lt(userVouchers.value.lp3)) {
       return <TransactionButton
       onClick={() => approve("coreDaoLp3")}
-        text="Approve Lp3 Migration"
+        text="(Step 3/3) Approve Lp3 Migration"
         textApproving="Approving..."
       />
     };
