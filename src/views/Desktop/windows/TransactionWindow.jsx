@@ -476,42 +476,6 @@ const TransactionWindow = ({
 
   const TransactionInProgress = ({ wallet }) => (
     <>
-      <div style={{ maxWidth: '50ch', padding: '1rem 2rem' }}>
-        <span style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
-          Security checklist
-          <img
-            src={warningIMG}
-            style={{ marginRight: '0.2rem', height: '1em' }}
-            alt="warning icon"
-          />
-        </span>
-
-        <div style={{ paddingTop: '0.35rem' }}>
-          <span style={{ fontWeight: 'bold' }}>1)</span>Are you on https://cvault.finance ?<br />
-        </div>
-
-        <div style={{ paddingTop: '0.35rem' }}>
-          <span style={{ fontWeight: 'bold' }}>2)</span> Does the website have a valid security
-          certificate ? (padlock next to the address bar)
-          <br />
-        </div>
-        {wallet.status === 'connected' && (
-          <div style={{ paddingTop: '0.35rem' }}>
-            <span style={{ fontWeight: 'bold' }}>3)</span> Are you transacting with is the real{' '}
-            {getSmartContractBeingInteracedWith()}{' '}
-            <Anchor href={`https://etherscan.io/address/${currentContractAddress()}`}>
-              {currentContractAddress().substring(0, 5)}...
-            </Anchor>
-            ?<br />
-          </div>
-        )}
-
-        <div style={{ paddingTop: '0.35rem' }}>
-          <span style={{ fontWeight: 'bold' }}>4)</span> Does the function call you are doing start
-          with {currentHexForFunction()} ? (under "data" tab in metamask)
-        </div>
-      </div>
-
       {wallet.status === 'connected' && (
         <>
           <div
