@@ -152,7 +152,7 @@ const WrapSection = ({ erc95Token, wrappedToken }) => {
 
   const wrappedTokenButtons = React.useMemo(() => {
     const disabled = userWrappedTokenBalance === DATA_UNAVAILABLE || userWrappedTokenBalance <= 0;
-    return <TransactionButton icon={wrapIMG} iconStyle={iconStyle} disabled={disabled} style={{ minWidth: '90px' }} text="Wrap" allowanceRequiredFor={{ contract: erc95Token.contract, token: wrappedToken.contract }} onClick={e => onWrap(e)} />
+    return <TransactionButton icon={wrapIMG} iconStyle={iconStyle} disabled={disabled} style={{ display: "none", minWidth: '90px' }} text="Wrap" allowanceRequiredFor={{ contract: erc95Token.contract, token: wrappedToken.contract }} onClick={e => onWrap(e)} />
   }, [userErc95Balance, userWrappedTokenBalance])
 
   const erc95Buttons = React.useMemo(() => {
@@ -189,7 +189,7 @@ const WrapTab = () => {
   return (
     <div>
       {configuration.map(section => <WrapSection {...section} />)}
-      <div style={{ maxWidth: '35ch', margin: 'auto', textAlign: 'center', paddingTop: '1rem' }}>
+      <div style={{ margin: 'auto', textAlign: 'center', paddingTop: '1rem' }}>
         ERC95 tokens are wrapped versions of their respective tokens. You can wrap and unwrap between them at will. Always 1:1, and without any fees.
       </div>
     </div>

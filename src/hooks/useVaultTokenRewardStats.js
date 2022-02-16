@@ -34,7 +34,8 @@ const useVaultTokenRewardStats = () => {
       
       // Avoid spamming the Archive RPC when in dev mode.
       if(process.env.NODE_ENV === "development") {
-       // return  123;
+        totalFoTLast30Days = 10; // 10 CORES
+        return;
       };
 
       if(!totalFoTLast30Days && !fetching) {

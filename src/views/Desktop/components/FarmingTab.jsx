@@ -287,10 +287,8 @@ const FarmingTab = () => {
     <div style={{ textAlign: 'justify' }}>
       <FarmingPairs />
       <div style={{ marginTop: '1em' }}>
-        **APY calculation is calculated as an average of fees over the last{' '}
-        {daysSinceFees !== DATA_UNAVAILABLE ? daysSinceFees.toFixed(2) : DATA_UNAVAILABLE} days,
-        current TVL and CORE price. All future pools will be carefully picked to maximise
-        opportunities for the CORE community.
+        **APY calculation is calculated as an average of fees over the last 30 days,
+        current TVL and CORE price.
       </div>
     </div>
   );

@@ -55,7 +55,7 @@ WindowComponents[WindowType.Router] = {
   taskbar: {
     icon: modemIMG,
     text: 'Router',
-    alwaysVisible: true
+    alwaysVisible: false
   }
 };
 WindowComponents[WindowType.CoreBurned] = {

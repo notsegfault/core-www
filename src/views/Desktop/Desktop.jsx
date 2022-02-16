@@ -217,14 +217,7 @@ const Desktop = ({width, height}) => {
       </a>
 
       <h1 id="core-message" style={{ zIndex: DESKTOP_ZINDEX }}>
-        <div>CoreVault is the first high yield farmable deflationary DeFi token</div>
-        CORE is backed by <span style={{ fontWeight: 'bold' }}>${liquidityStats.tll.toLocaleString('en')}</span> in locked liquidity -<br />
-        <span style={{ fontWeight: 'bold' }}>${liquidityStats.tvpl.toLocaleString('en')}</span> of which is <span style={{ fontWeight: 'bold' }}>permanently locked</span>.
-        <FundProtectedCover>
-          <Anchor href="https://app.coverprotocol.com/app/marketplace/protocols/CORE" target="_blank">
-            <img src={coverLogoIMG} /><span>Funds protected by COVER</span>
-          </Anchor>
-        </FundProtectedCover>
+        <div>CoreVault is the first high yield farmable deflationary DeFi token with low risk lending</div>
         <OnlinePresenceLinks>
           We are on{' '}
           <Anchor href="https://t.me/COREVault" target="_blank">

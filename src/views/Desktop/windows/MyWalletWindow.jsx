@@ -27,8 +27,8 @@ import { CoreTab, CoreTabBody } from '../../../components/Tab';
 import { isMobile } from 'react-device-detect';
 import { UnorderedList } from '../../../components/List';
 import { APP_VERSION } from '../../../yam/lib/constants';
-import CoreDAOMigration from '../components/CoreDAOMigration';
-import newIMG from '../../../assets/img/new-gif-icon-28.jpg';
+import WrapTab from '../components/WrapTab';
+import ArbitrageTab from '../components/Arbitrage/ArbitrageTab';
 
 const ConnectionWindowContent = styled.div`
   margin-top: 0.3em;
@@ -65,7 +65,7 @@ const MyWalletWindow = props => {
   const [state, setState] = React.useState({
     activeTab: props.activeTab || 0,
   });
-
+  const currentWindowInstance = windowsContext.getWindowByName(props.windowName);
   const handleChange = (e, value) => setState({ activeTab: value });
   const { activeTab } = state;
 
@@ -308,12 +308,14 @@ const MyWalletWindow = props => {
         <Tabs value={activeTab} onChange={handleChange}>
           <CoreTab value={0}> Summary </CoreTab>
           {wallet.account && <CoreTab value={1}> Farm </CoreTab>}
-          {wallet.account && <CoreTab value={3}> Migration <img style={{marginLeft: "5px"}} src={newIMG} /></CoreTab>}
+          {wallet.account && <CoreTab value={2}> Unwrap </CoreTab>}
+          {wallet.account && <CoreTab value={3}> Arbitrage </CoreTab>}
         </Tabs>
         <CoreTabBody>
           {activeTab === 0 && <SummaryTab setWalletWindowState={setState} />}
           {activeTab === 1 && <FarmingTab />}
-          {activeTab === 3 && <CoreDAOMigration />}
+          {activeTab === 2 && <WrapTab />}
+          {activeTab === 3 && <ArbitrageTab parentWindow={currentWindowInstance} />}
         </CoreTabBody>
       </CoreWindowContent>
     </CoreWindow>

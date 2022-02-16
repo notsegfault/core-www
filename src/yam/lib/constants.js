@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js/bignumber';
 
 export const CHAIN_ID = 1;
 export const SUBTRACT_GAS_LIMIT = 100000;
-export const APP_VERSION = "2.3.3";
+export const APP_VERSION = "2.4.0";
 
 const ONE_MINUTE_IN_SECONDS = new BigNumber(60);
 const ONE_HOUR_IN_SECONDS = ONE_MINUTE_IN_SECONDS.times(60);

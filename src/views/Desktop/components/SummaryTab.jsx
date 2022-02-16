@@ -22,6 +22,7 @@ import { getTransactionWindowName } from '../windows/TransactionWindow';
 import { WindowType } from '../../../config/windowTypes.config';
 import { TransactionButton } from '../../../components/Button';
 import './styles/staking-grid.css';
+import CoreDAOMigration from './CoreDAOMigration';
 
 const StakingBox = styled(Fieldset)`
   height: 150px;
@@ -315,34 +316,7 @@ const SummaryTab = ({ setWalletWindowState }) => {
           </a>
         </CoreSummaryPanelRight>
       </CoreSummaryPanel>
-      <div className="staking-grid">
-        {wallet.account &&
-          pairNamesRows.map((row, rowIndex) => (
-            <div key={`row-${rowIndex}`} className="staking-grid-row">
-              {row.map(pairName => {
-                if (pairInfoMap[pairName].isToken) {
-                  return (
-                    <TokenSummary
-                      className="staking-grid-row-cell"
-                      key={`summary-${pairName}`}
-                      tokenName={pairName}
-                      setWalletWindowState={setWalletWindowState}
-                    />
-                  );
-                }
-
-                return (
-                  <PairSummary
-                    className="staking-grid-row-cell"
-                    key={`summary-${pairName}`}
-                    pairName={pairName}
-                    setWalletWindowState={setWalletWindowState}
-                  />
-                );
-              })}
-            </div>
-          ))}
-      </div>
+      <CoreDAOMigration />
     </>
   );
 };

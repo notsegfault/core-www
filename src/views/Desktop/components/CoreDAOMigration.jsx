@@ -14,6 +14,7 @@ import { ErrorType } from '../../../contexts/Windows/WindowsProvider';
 import useGovernance from '../../../hooks/useGovernance';
 import BigNumber from 'bignumber.js';
 import { printable, transactions } from '../../../helpers';
+import newIMG from '../../../assets/img/new-gif-icon-28.jpg';
 import {
   useUserApprovalOfContract,
   useUserVouchers,
@@ -181,19 +182,8 @@ const CoreDAOMigration = () => {
   };
 
   return (
-    <div>
-      {/*<div>Current Delegatee:<br/> {governance.delegatee}</div>
-
-      <br />
-      <TextField value={delegateeTxt} placeholder="0x0000000000000000000000000000000000000000"  onChange={(e) => setDelegateeTxt(e.target.value)} />
-      <TransactionButton
-        style={{ marginTop: '1rem' }}
-        onClick={() => onChangeDelagatee()}
-        text="Set Delegatee"
-        textLoading="Loading..."
-  />*/}
-
-    <MigrationFieldSet label="CoreDAO LP Voucher Migration">
+    <div style={{marginTop: "1em"}}>
+    <MigrationFieldSet label={<>CoreDAO LP Voucher Migration <img style={{ position: "relative", marginLeft: "0.5em", top: "4px"}} width="30px" height="14px" src={newIMG} /></>}>
       <div style={{marginBottom: "1em"}}>
         Migrate your CoreDAO LPs using the button below. The LP tokens need to be in your wallet beforehand.
         <br/>
