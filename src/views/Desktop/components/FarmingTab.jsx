@@ -17,7 +17,7 @@ import { ErrorType } from '../../../contexts/Windows/WindowsProvider';
 import { printable } from '../../../helpers';
 
 const StakingBox = styled(Fieldset)`
-  height: 150px;
+  height: 185px;
   text-align: left;
 
   @media only screen and (max-width: 767px) {
@@ -25,24 +25,6 @@ const StakingBox = styled(Fieldset)`
   }
 `;
 
-const RouterButton = ({ routerUnavailable }) => {
-  const wallet = useWallet();
-  const windowsContext = React.useContext(WindowsContext);
-
-  return (
-    <>
-      <Button
-        disabled={!wallet.account || routerUnavailable}
-        fullWidth
-        primary
-        onClick={e => windowsContext.openWindow(WindowType.Router, e)}
-      >
-        <img alt="modem" src={modemIMG} style={{ height: '20px', paddingRight: '0.5rem' }} />
-        One Click Buy &amp; Stake
-      </Button>
-    </>
-  );
-};
 
 const FarmingPairs = () => {
   const wallet = useWallet();
@@ -134,13 +116,6 @@ const FarmingToken = ({ className, tokenName }) => {
             {tokenInfo.unit}
           </div>
         </div>
-        <div>
-          {vaultRewardStats !== DATA_UNAVAILABLE ?
-            <>APY <ScrambleDisplay value={vaultRewardStats} decimals={0} precision={2} />%* </> :
-            <>Loading...</>
-          }
-        </div>
-
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
             Claimable{' '}
@@ -151,6 +126,19 @@ const FarmingToken = ({ className, tokenName }) => {
             />
           </div>
         </div>
+        <hr/>
+        <div>
+          {vaultRewardStats !== DATA_UNAVAILABLE ?
+            <>
+                <div>Daily APY <ScrambleDisplay value={vaultRewardStats.daily} decimals={0} precision={2} />%</div>
+                <div>Weekly APY <ScrambleDisplay value={vaultRewardStats.weekly} decimals={0} precision={2} />%</div>
+                <div>Monthly APY <ScrambleDisplay value={vaultRewardStats.monthly} decimals={0} precision={2} />%</div>
+            </> :
+            <>Calculating APY...</>
+          }
+        </div>
+
+
 
         <div style={{ marginTop: '1em' }}>
           <TransactionButton
@@ -286,10 +274,6 @@ const FarmingTab = () => {
   return (
     <div style={{ textAlign: 'justify' }}>
       <FarmingPairs />
-      <div style={{ marginTop: '1em' }}>
-        **APY calculation is calculated as an average of fees over the last 30 days,
-        current TVL and CORE price.
-      </div>
     </div>
   );
 };

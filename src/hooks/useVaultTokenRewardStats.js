@@ -3,18 +3,20 @@ import { useCorePrice, useWeb3 } from '.';
 import { singletonHook } from 'react-singleton-hook';
 import { DATA_UNAVAILABLE } from '../yam/lib/constants';
 
-const approximatedBlockPerDay = 6450;
-const approximatedBlockPerMonth = Math.ceil((6450 * 365) / 12);
+const approximatedBlockPerDay = 7000;
+const approximatedBlockPerMonth = Math.ceil((approximatedBlockPerDay * 365) / 12);
 
-let totalFoTLast30Days;
+let fotStats;
 let fetching;
 
-const calculateApy = (totalFoTLast30Days, totalTokenInVault, tokenPriceInUsd, corePriceInUsd) => {
-  const coreGeneratedPerYear = totalFoTLast30Days * (365 / 30);
-  const valueGeneratedPerYear = coreGeneratedPerYear * corePriceInUsd;
+const calculateApy = (fotStats, totalTokenInVault, tokenPriceInUsd, corePriceInUsd) => {
   const valueOfPoolInToken = totalTokenInVault * tokenPriceInUsd;
 
-  return (valueGeneratedPerYear * 100) / valueOfPoolInToken;
+  return {
+    daily: (((fotStats.daily * 365) * corePriceInUsd) * 100) / valueOfPoolInToken,
+    weekly: (((fotStats.weekly * (365 / 7)) * corePriceInUsd) * 100) / valueOfPoolInToken,
+    monthly: (((fotStats.monthly * (365 / 30)) * corePriceInUsd) * 100) / valueOfPoolInToken,
+  }
 };
 
 const useVaultTokenRewardStats = () => {
@@ -31,31 +33,55 @@ const useVaultTokenRewardStats = () => {
   
     async function fetchLast30DaysCoreFoT() {
       const currentBlock = await web3Client.web3.eth.getBlockNumber();
-      
+
       // Avoid spamming the Archive RPC when in dev mode.
       if(process.env.NODE_ENV === "development") {
-        totalFoTLast30Days = 10; // 10 CORES
+        fotStats = {
+          daily: 0.3,
+          weekly: 4,
+          monthly: 12
+        }
         return;
       };
 
-      if(!totalFoTLast30Days && !fetching) {
+      if(!fotStats && !fetching) {
         fetching = true;
         console.log("fetching getPastLogs...")
 
         const vaultAddressHex = "0x000000000000000000000000c5cacb708425961594b63ec171f4df27a9c0d8c9";
 
-        totalFoTLast30Days = (await web3Client.web3.eth.getPastLogs({
+        const logs = (await web3Client.web3.eth.getPastLogs({
             address: "0x62359Ed7505Efc61FF1D56fEF82158CcaffA23D7", // Core token
             topics: ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"], // Transfer event
             fromBlock: currentBlock - approximatedBlockPerMonth,
             toBlock: currentBlock
         }))
+        .sort((evOne, evTwo) => evOne.blockNumber - evTwo.blockNumber)
         .filter(log => !log.removed && log.topics[2] == vaultAddressHex)
-        .reduce((totalFoT, log) => {
-          return totalFoT + web3Client.web3.eth.abi.decodeParameter("uint256", log.data) / 1e18;
-        }, 0);
 
-        console.log("totalFoTLast30Days", totalFoTLast30Days, "core");
+        const max7DaysBlockNumber =  currentBlock - (approximatedBlockPerDay * 7);
+        const max24HoursBlockNumber =  currentBlock - approximatedBlockPerDay;
+
+        fotStats = logs.reduce((fotStats, log) => {
+          const fot = web3Client.web3.eth.abi.decodeParameter("uint256", log.data) / 1e18;
+
+          if(log.blockNumber <= max24HoursBlockNumber) {
+            fotStats.daily += fot;
+            fotStats.weekly += fot;
+          } else if(log.blockNumber <= max7DaysBlockNumber) {
+            fotStats.weekly += fot;
+          }
+          
+          fotStats.monthly += fot;
+          fotStats.prevBlock = log.blockNumber;
+          return fotStats;
+        }, {
+          daily: 0,
+          weekly: 0,
+          monthly: 0,
+        });
+
+        console.log("fotStats", fotStats);
       }
     }
 
@@ -64,7 +90,7 @@ const useVaultTokenRewardStats = () => {
       const token = web3Client.contracts["coreDAO"];
       const totalTokenInVault = (await token.methods.balanceOf(web3Client.contracts.COREVAULT._address).call()) / 1e18
 
-      const apy = calculateApy(totalFoTLast30Days, totalTokenInVault, 1, corePrice.inUSD);
+      const apy = calculateApy(fotStats, totalTokenInVault, 1, corePrice.inUSD);
       console.log("apy", apy, "%");
       setAPY(apy);
     }
