@@ -397,23 +397,6 @@ export const getContractEventInterface = (yam, contract, eventName) => {
   return eventInterface;
 };
 
-export const calculateApyStats = (pairName, coreGeneratedPerBlock, lpTokensInVault, valuePerLPToken, balanceCore, balanceToken) => {
-  const allocatedCoreGeneratePerBlock = coreGeneratedPerBlock * yieldPercentagePerPairs[pairName];
-  const valueOfPoolInToken = (lpTokensInVault / 1e18) * valuePerLPToken;
-  const valueOfCoreInToken = balanceToken / balanceCore;
-  const coreGeneratedPerYear = (allocatedCoreGeneratePerBlock / 1e18) * ethereumStats.approximatedBlockPerYear;
-  const valueTokenGeneratedPerYear = coreGeneratedPerYear * valueOfCoreInToken;
-  const apy = (valueTokenGeneratedPerYear * 100) / valueOfPoolInToken;
-  const roundDownApy = parseInt(Math.round(apy));
-  const dpy = apy / 365 / 100;
-
-  return {
-    dpy: dpy || 0,
-    apy: apy || 0,
-    roundDownApy: roundDownApy || 0
-  }
-}
-
 /**
  * Extract the token name from the strategy name.
  * Name converntion is "token1 price too low. In token0/token1 pair"

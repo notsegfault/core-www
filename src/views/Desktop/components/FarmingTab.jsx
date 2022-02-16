@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Fieldset, Anchor } from 'react95';
-import useVaultRewardStats from '../../../hooks/useVaultRewardStats';
 import { DATA_UNAVAILABLE, pairInfoMap } from '../../../yam/lib/constants';
 import { useWallet } from 'use-wallet';
 import modemIMG from '../../../assets/img/modem.png';
@@ -10,12 +9,12 @@ import { useUserPoolPending, useUserStakedInPool, useVaultTokenRewardStats } fro
 import { claimCORE } from '../../../utils';
 import ScrambleDisplay from '../../../components/Text/ScrambleDisplay';
 import { WindowsContext } from '../../../contexts/Windows';
-import { getUniswapInfoWindowName } from '../windows/UniswapInfoWindow';
 import { getTransactionWindowName } from '../windows/TransactionWindow';
 import { WindowType } from '../../../config/windowTypes.config';
 import './styles/staking-grid.css';
 import { TransactionButton } from '../../../components/Button';
 import { ErrorType } from '../../../contexts/Windows/WindowsProvider';
+import { printable } from '../../../helpers';
 
 const StakingBox = styled(Fieldset)`
   height: 150px;
@@ -91,7 +90,7 @@ const FarmingToken = ({ className, tokenName }) => {
   const wallet = useWallet();
   const yam = useYam();
   const windowsContext = React.useContext(WindowsContext);
-  const vaultRewardStats = useVaultTokenRewardStats(tokenName);
+  const vaultRewardStats = useVaultTokenRewardStats();
   const TokenstakedInPool = useUserStakedInPool(tokenInfo.pid, wallet.account);
   const userPendingInPool = useUserPoolPending([tokenInfo.pid], wallet.account);
 
@@ -136,9 +135,10 @@ const FarmingToken = ({ className, tokenName }) => {
           </div>
         </div>
         <div>
-          APY{' '}
-          <ScrambleDisplay value={parseFloat(vaultRewardStats.apy)} decimals={0} precision={0} />
-          %*
+          {vaultRewardStats !== DATA_UNAVAILABLE ?
+            <>APY <ScrambleDisplay value={vaultRewardStats} decimals={0} precision={2} />%* </> :
+            <>Loading...</>
+          }
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -178,15 +178,13 @@ const FarmingToken = ({ className, tokenName }) => {
   );
 };
 
-const FarmingPair = ({ className, pairName, routerUnavailable }) => {
+const FarmingPair = ({ className, pairName }) => {
   const pairInfo = pairInfoMap[pairName];
   const wallet = useWallet();
   const yam = useYam();
   const windowsContext = React.useContext(WindowsContext);
-  const vaultRewardStats = useVaultRewardStats(pairName);
   const CORELPstakedInPool = useUserStakedInPool(pairInfo.pid, wallet.account);
   const userPendingInPool = useUserPoolPending([pairInfo.pid], wallet.account);
-  const uniswapInfoWindowName = getUniswapInfoWindowName(pairName);
 
   const onClaimCORE = async () => {
     try {
@@ -229,9 +227,7 @@ const FarmingPair = ({ className, pairName, routerUnavailable }) => {
           </div>
         </div>
         <div>
-          APY{' '}
-          <ScrambleDisplay value={parseFloat(vaultRewardStats.apy)} decimals={0} precision={0} />
-          %*
+          APY 0%*
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -244,23 +240,6 @@ const FarmingPair = ({ className, pairName, routerUnavailable }) => {
             />
           </div>
         </div>
-        {wallet.account && (
-          <Anchor
-            href="#"
-            onClick={e => {
-              windowsContext.openWindow(
-                WindowType.UniswapInfo,
-                e,
-                { pairName },
-                { windowName: uniswapInfoWindowName }
-              );
-            }}
-          >
-            {' '}
-            More info...{' '}
-          </Anchor>
-        )}
-
         <div style={{ marginTop: '1em' }}>
           <TransactionButton
             style={{ flex: '50%', marginRight: '0.5em' }}
@@ -282,9 +261,6 @@ const FarmingPair = ({ className, pairName, routerUnavailable }) => {
             onClick={_ => onClaimCORE()}
           />
         </div>
-        {/*<div style={{ marginTop: '0.5em' }}>
-        <RouterButton routerUnavailable={routerUnavailable} />
-    </div>*/}
       </StakingBox>
     </div>
   );

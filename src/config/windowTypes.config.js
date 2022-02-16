@@ -13,7 +13,6 @@ export const WindowType = {
   CountdownLge2: 'CountdownLge2',
   CountdownLge3: 'CountdownLge3',
   Transaction: 'Transaction',
-  UniswapInfo: 'UniswapInfo',
   Error: 'Error',
   Dialog: 'Dialog',
   Confirm: 'Confirm',

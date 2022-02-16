@@ -29,7 +29,7 @@ export const INTEGERS = {
   INTEREST_RATE_BASE: new BigNumber('1e18'),
 };
 
-export const web3Url = "https://cloudflare-eth.com/";
+export const web3Url = "https://eth-mainnet.alchemyapi.io/v2/TsLEJAhX87icgMO7ZVyPcpeEgpFEo96O";
 
 export const addressMap = {
   // uni shit
@@ -164,9 +164,6 @@ pairInfoMap['coreDAO'] = {
   pid: 3,
   address: addressMap['coreDAO']
 };
-export const ethereumStats = {};
-ethereumStats.approximatedBlockPerDay = 6650;
-ethereumStats.approximatedBlockPerYear = ethereumStats.approximatedBlockPerDay * 365;
 
 export const yieldPercentagePerPairs = {
   'CORExWETH': 0.0,

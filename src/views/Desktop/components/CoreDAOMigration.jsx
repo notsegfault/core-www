@@ -2,19 +2,12 @@ import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import styled from 'styled-components';
 import Web3 from "web3";
-import { Button, Fieldset, Anchor, TextField } from 'react95';
-import useVaultRewardStats from '../../../hooks/useVaultRewardStats';
-import { DATA_UNAVAILABLE, pairInfoMap } from '../../../yam/lib/constants';
+import { Fieldset } from 'react95';
+import { DATA_UNAVAILABLE } from '../../../yam/lib/constants';
 import { useWallet } from 'use-wallet';
-import modemIMG from '../../../assets/img/modem.png';
 import useYam from '../../../hooks/useYam';
-import { useUserPoolPending, useUserStakedInPool, useUserTokenBalance, useWeb3 } from '../../../hooks';
-import { claimCORE } from '../../../utils';
-import ScrambleDisplay from '../../../components/Text/ScrambleDisplay';
+import { useUserTokenBalance } from '../../../hooks';
 import { WindowsContext } from '../../../contexts/Windows';
-import { getUniswapInfoWindowName } from '../windows/UniswapInfoWindow';
-import { getTransactionWindowName } from '../windows/TransactionWindow';
-import { WindowType } from '../../../config/windowTypes.config';
 import './styles/staking-grid.css';
 import { TransactionButton } from '../../../components/Button';
 import { ErrorType } from '../../../contexts/Windows/WindowsProvider';
@@ -22,7 +15,6 @@ import useGovernance from '../../../hooks/useGovernance';
 import BigNumber from 'bignumber.js';
 import { printable, transactions } from '../../../helpers';
 import {
-  useCoreBalance,
   useUserApprovalOfContract,
   useUserVouchers,
 } from '../../../hooks';

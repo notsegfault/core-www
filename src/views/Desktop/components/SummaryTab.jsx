@@ -63,7 +63,6 @@ const PairSummary = ({ className, pairName, setWalletWindowState }) => {
   const windowsContext = React.useContext(WindowsContext);
   const CORELPstakedInPool = useUserStakedInPool(pairInfo.pid, wallet.account);
   const CORELPInWallet = useCoreLPBalance(pairName);
-  const vaultRewardStats = useVaultRewardStats(pairName);
 
   let claimableLP = 0;
   const totalLP =
@@ -152,7 +151,8 @@ const PairSummary = ({ className, pairName, setWalletWindowState }) => {
                   : 'hidden',
             }}
           >
-            {vaultRewardStats.apy}% APY
+            0% APY
+
             <span
               style={{ cursor: 'pointer' }}
               onClick={() => setWalletWindowState({ activeTab: 1 })}
@@ -251,7 +251,10 @@ const TokenSummary = ({ className, tokenName, setWalletWindowState }) => {
                   : 'hidden',
             }}
           >
-            {vaultRewardStats.apy}% APY
+            {vaultRewardStats !== DATA_UNAVAILABLE ?
+              <>APY <ScrambleDisplay value={vaultRewardStats} decimals={0} precision={2} />%* </> :
+              <>Loading...</>
+            }
             <span
               style={{ cursor: 'pointer' }}
               onClick={() => setWalletWindowState({ activeTab: 1 })}

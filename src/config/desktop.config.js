@@ -63,7 +63,7 @@ WindowComponents[WindowType.CoreBurned] = {
   taskbar: {
     icon: coreburnIMG,
     text: 'burn.exe',
-    alwaysVisible: true
+    alwaysVisible: false
   }
 };
 
@@ -105,12 +105,6 @@ WindowComponents[WindowType.CountdownLge3] = {
 };
 WindowComponents[WindowType.Transaction] = {
   component: React.lazy(() => import('../views/Desktop/windows/TransactionWindow'))
-};
-WindowComponents[WindowType.UniswapInfo] = {
-  component: React.lazy(() => import('../views/Desktop/windows/UniswapInfoWindow')),
-  taskbar: {
-    icon: infoIMG
-  }
 };
 WindowComponents[WindowType.Error] = {
   component: React.lazy(() => import('../views/Desktop/windows/Error'))
