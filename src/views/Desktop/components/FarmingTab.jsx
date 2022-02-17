@@ -17,7 +17,7 @@ import { ErrorType } from '../../../contexts/Windows/WindowsProvider';
 import { printable } from '../../../helpers';
 
 const StakingBox = styled(Fieldset)`
-  height: 185px;
+  height: 180px;
   text-align: left;
 
   @media only screen and (max-width: 767px) {
@@ -130,9 +130,21 @@ const FarmingToken = ({ className, tokenName }) => {
         <div>
           {vaultRewardStats !== DATA_UNAVAILABLE ?
             <>
-                <div>Daily APY <ScrambleDisplay value={vaultRewardStats.daily} decimals={0} precision={2} />%</div>
-                <div>Weekly APY <ScrambleDisplay value={vaultRewardStats.weekly} decimals={0} precision={2} />%</div>
-                <div>Monthly APY <ScrambleDisplay value={vaultRewardStats.monthly} decimals={0} precision={2} />%</div>
+                <div style={{fontWeight: "bold"}}>Average APY</div>
+                <div style={{ display: "flex"}}>
+                  <span style={{borderRight: "1px solid gray", paddingRight: "5px", marginRight: "5px"}}>
+                    <span>{printable.formatPercent(vaultRewardStats.daily, 2)}</span>
+                    <span style={{color: "#444444", fontSize: "0.8em", marginLeft: "5px"}}>24h</span>
+                  </span>
+                  <span style={{borderRight: "1px solid gray", paddingRight: "5px", marginRight: "5px"}}>
+                    <span>{printable.formatPercent(vaultRewardStats.weekly, 2)}</span>
+                    <span style={{color: "#444444", fontSize: "0.8em", marginLeft: "5px"}}>7d</span>
+                  </span>
+                  <span>
+                    <span>{printable.formatPercent(vaultRewardStats.monthly, 2)}</span>
+                    <span style={{color: "#444444", fontSize: "0.8em", marginLeft: "5px"}}>30d</span>
+                  </span>
+                </div>
             </> :
             <>Calculating APY...</>
           }

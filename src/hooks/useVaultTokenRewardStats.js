@@ -35,14 +35,14 @@ const useVaultTokenRewardStats = () => {
       const currentBlock = await web3Client.web3.eth.getBlockNumber();
 
       // Avoid spamming the Archive RPC when in dev mode.
-      if(process.env.NODE_ENV === "development") {
+      /*if(process.env.NODE_ENV === "development") {
         fotStats = {
           daily: 0.3,
           weekly: 4,
           monthly: 12
         }
         return;
-      };
+      };*/
 
       if(!fotStats && !fetching) {
         fetching = true;
