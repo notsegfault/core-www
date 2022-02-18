@@ -5,7 +5,7 @@ import { DATA_UNAVAILABLE, pairInfoMap } from '../../../yam/lib/constants';
 import { useWallet } from 'use-wallet';
 import modemIMG from '../../../assets/img/modem.png';
 import useYam from '../../../hooks/useYam';
-import { useUserPoolPending, useUserStakedInPool, useUserTokenBalance, useVaultTokenRewardStats } from '../../../hooks';
+import { useCoreLPBalance, useUserPoolPending, useUserStakedInPool, useUserTokenBalance, useVaultTokenRewardStats } from '../../../hooks';
 import { claimCORE } from '../../../utils';
 import ScrambleDisplay from '../../../components/Text/ScrambleDisplay';
 import { WindowsContext } from '../../../contexts/Windows';
@@ -234,6 +234,7 @@ const FarmingPair = ({ className, pairName }) => {
   const windowsContext = React.useContext(WindowsContext);
   const CORELPstakedInPool = useUserStakedInPool(pairInfo.pid, wallet.account);
   const userPendingInPool = useUserPoolPending([pairInfo.pid], wallet.account);
+  const TokenInWallet = useCoreLPBalance(pairName);
 
   const onClaimCORE = async () => {
     try {
@@ -259,6 +260,7 @@ const FarmingPair = ({ className, pairName }) => {
       { windowName: getTransactionWindowName('withdraw') }
     );
 
+    TokenInWallet.refresh();
     CORELPstakedInPool.refresh();
     userPendingInPool.refresh();
   };
@@ -266,6 +268,16 @@ const FarmingPair = ({ className, pairName }) => {
   return (
     <div className={className}>
       <StakingBox label={`${pairInfo.name}`}>
+       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            Wallet{' '}
+            <ScrambleDisplay
+              value={parseFloat((TokenInWallet.value * pairInfo.supplyScale) / 1e18)}
+              decimals={0}
+            />{' '}
+            {pairInfo.unit}
+          </div>
+        </div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
             Staked{' '}
