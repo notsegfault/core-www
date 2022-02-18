@@ -109,7 +109,7 @@ const TransactionButton = ({
 
   const renderButtonText = () => {
     if (loading) {
-      return <span>{allowanceSatisfied ? textLoading : textApproving} <Hourglass size={20} /></span>
+      return <span>{allowanceSatisfied ? textLoading : textApproving} <Hourglass size={16} /></span>
     }
 
     if (icon) {

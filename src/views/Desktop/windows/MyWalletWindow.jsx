@@ -228,7 +228,7 @@ const MyWalletWindow = props => {
   });
 
   const windowSize = {
-    width: 630,
+    width: 685,
     height: 434
   };
 

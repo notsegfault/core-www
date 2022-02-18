@@ -5,7 +5,7 @@ import { DATA_UNAVAILABLE, pairInfoMap } from '../../../yam/lib/constants';
 import { useWallet } from 'use-wallet';
 import modemIMG from '../../../assets/img/modem.png';
 import useYam from '../../../hooks/useYam';
-import { useUserPoolPending, useUserStakedInPool, useVaultTokenRewardStats } from '../../../hooks';
+import { useUserPoolPending, useUserStakedInPool, useUserTokenBalance, useVaultTokenRewardStats } from '../../../hooks';
 import { claimCORE } from '../../../utils';
 import ScrambleDisplay from '../../../components/Text/ScrambleDisplay';
 import { WindowsContext } from '../../../contexts/Windows';
@@ -75,6 +75,7 @@ const FarmingToken = ({ className, tokenName }) => {
   const vaultRewardStats = useVaultTokenRewardStats();
   const TokenstakedInPool = useUserStakedInPool(tokenInfo.pid, wallet.account);
   const userPendingInPool = useUserPoolPending([tokenInfo.pid], wallet.account);
+  const TokenInWallet = useUserTokenBalance(tokenName);
 
   const onClaimCORE = async () => {
     try {
@@ -84,6 +85,33 @@ const FarmingToken = ({ className, tokenName }) => {
     }
 
     userPendingInPool.refresh();
+  };
+
+  const hasToken = () => {
+    return (
+      wallet &&
+      TokenInWallet.balance !== DATA_UNAVAILABLE &&
+      parseFloat((TokenInWallet.balance * tokenInfo.supplyScale) / 1e18).toFixed(6) > 0
+    );
+  };
+
+  const onStake = async () => {
+    await windowsContext.openModal(
+      WindowType.Transaction,
+      null,
+      {
+        type: 'stake',
+        additional: {
+          pid: tokenInfo.pid,
+        },
+      },
+      {
+        windowName: getTransactionWindowName('stake'),
+      }
+    );
+
+    TokenInWallet.refresh();
+    TokenstakedInPool.refresh();
   };
 
   const onUnstake = async () => {
@@ -106,6 +134,17 @@ const FarmingToken = ({ className, tokenName }) => {
   return (
     <div className={className}>
       <StakingBox label={`${tokenInfo.name}`}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            Wallet{' '}
+            <ScrambleDisplay
+              value={parseFloat((TokenInWallet.balance * tokenInfo.supplyScale) / 1e18)}
+              decimals={0}
+            />{' '}
+            {tokenInfo.unit}
+          </div>
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
             Staked{' '}
@@ -152,7 +191,16 @@ const FarmingToken = ({ className, tokenName }) => {
 
 
 
-        <div style={{ marginTop: '1em' }}>
+        <div style={{ marginTop: '0.5em' }}>
+          <TransactionButton
+            style={{ flex: '50%', marginRight: '0.5em' }}
+            text="Stake"
+            disabled={!hasToken()}
+            textLoading="Staking..."
+            allowanceRequiredFor={{ contract: 'COREVAULT', token: tokenName }}
+            onClick={() => onStake()}
+          />
+
           <TransactionButton
             style={{ flex: '50%', marginRight: '0.5em' }}
             text="Unstake"
@@ -172,6 +220,7 @@ const FarmingToken = ({ className, tokenName }) => {
             disabled={userPendingInPool.value <= 0 ? 'disabled' : ''}
             onClick={_ => onClaimCORE()}
           />
+          
         </div>
       </StakingBox>
     </div>
@@ -196,6 +245,7 @@ const FarmingPair = ({ className, pairName }) => {
     userPendingInPool.refresh();
   };
 
+  
   const onUnstake = async () => {
     await windowsContext.openModal(
       WindowType.Transaction,
