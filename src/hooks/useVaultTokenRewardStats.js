@@ -59,16 +59,16 @@ const useVaultTokenRewardStats = () => {
         .sort((evOne, evTwo) => evOne.blockNumber - evTwo.blockNumber)
         .filter(log => !log.removed && log.topics[2] == vaultAddressHex)
 
-        const max7DaysBlockNumber =  currentBlock - (approximatedBlockPerDay * 7);
-        const max24HoursBlockNumber =  currentBlock - approximatedBlockPerDay;
+        const min7DaysBlockNumber =  currentBlock - (approximatedBlockPerDay * 7);
+        const min24HoursBlockNumber =  currentBlock - approximatedBlockPerDay;
 
         fotStats = logs.reduce((fotStats, log) => {
           const fot = web3Client.web3.eth.abi.decodeParameter("uint256", log.data) / 1e18;
 
-          if(log.blockNumber <= max24HoursBlockNumber) {
+          if(log.blockNumber >= min24HoursBlockNumber) {
             fotStats.daily += fot;
             fotStats.weekly += fot;
-          } else if(log.blockNumber <= max7DaysBlockNumber) {
+          } else if(log.blockNumber >= min7DaysBlockNumber) {
             fotStats.weekly += fot;
           }
           
